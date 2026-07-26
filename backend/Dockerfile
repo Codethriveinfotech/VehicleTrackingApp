@@ -5,7 +5,7 @@ WORKDIR /home/gradle/src
 RUN ./gradlew :backend:buildFatJar --no-daemon
 
 # Run stage
-FROM openjdk:17-slim
+FROM eclipse-temurin:17-jre
 EXPOSE 8080
 RUN mkdir /app
 COPY --from=build /home/gradle/src/backend/build/libs/*.jar /app/ktor-app.jar
