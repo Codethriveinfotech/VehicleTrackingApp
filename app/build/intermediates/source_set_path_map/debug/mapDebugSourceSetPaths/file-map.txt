@@ -1,0 +1,63 @@
+com.vehicletrackingapp-ui-tooling-preview-release-0 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\043cdd9205ed884246d5814824176ed8\transformed\ui-tooling-preview-release\res
+com.vehicletrackingapp-lifecycle-runtime-release-1 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\09cf45359592323c1f56b5bdee057adb\transformed\lifecycle-runtime-release\res
+com.vehicletrackingapp-foundation-release-2 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\0e7a0dd19e2522aa26a896218e6b7190\transformed\foundation-release\res
+com.vehicletrackingapp-lifecycle-viewmodel-release-3 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\0ec316f36fb8c9f843129d98dfaf78d0\transformed\lifecycle-viewmodel-release\res
+com.vehicletrackingapp-animation-core-release-4 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\1cd88cb17e5cf740cecaa83af4988185\transformed\animation-core-release\res
+com.vehicletrackingapp-material-release-5 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\22b5fb04a7c8f31027bcf0383fea3d8c\transformed\material-release\res
+com.vehicletrackingapp-navigation-common-ktx-2.7.7-6 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\299b24afca1506271f8affd9cbb80db4\transformed\navigation-common-ktx-2.7.7\res
+com.vehicletrackingapp-room-ktx-2.6.1-7 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\2d34fc1731cf7d3ba08ba6a1b3aa7893\transformed\room-ktx-2.6.1\res
+com.vehicletrackingapp-lifecycle-runtime-ktx-release-8 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\2eb46acef4d3d7aff5a75111a71983b6\transformed\lifecycle-runtime-ktx-release\res
+com.vehicletrackingapp-ui-tooling-release-9 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\2eb75280bd33973d5d000268fea9a820\transformed\ui-tooling-release\res
+com.vehicletrackingapp-runtime-saveable-release-10 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\3ed8fdcff26141149d57e4e217c162fa\transformed\runtime-saveable-release\res
+com.vehicletrackingapp-material3-release-11 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\3f8dc2672da716dbb892134687526a34\transformed\material3-release\res
+com.vehicletrackingapp-material-ripple-release-12 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\46b2f8c1a2c50178b86c91e8929e8bcc\transformed\material-ripple-release\res
+com.vehicletrackingapp-activity-1.9.1-13 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\538ae3f2330d04c40e570ae9327268b7\transformed\activity-1.9.1\res
+com.vehicletrackingapp-startup-runtime-1.1.1-14 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\58d14298fcd1edd1f3f9a0b84ff6db4a\transformed\startup-runtime-1.1.1\res
+com.vehicletrackingapp-emoji2-1.3.0-15 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\60be9d7cbe0d515b386333d7ef273790\transformed\emoji2-1.3.0\res
+com.vehicletrackingapp-foundation-layout-release-16 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\63facc7e6e2fa8ae57ecaec517360e7e\transformed\foundation-layout-release\res
+com.vehicletrackingapp-savedstate-1.2.1-17 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\6b64e23bea330bcb07704b7521b2754c\transformed\savedstate-1.2.1\res
+com.vehicletrackingapp-sqlite-2.4.0-18 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\6bd6925a580d4f621e6bd1b48fe23246\transformed\sqlite-2.4.0\res
+com.vehicletrackingapp-ui-graphics-release-19 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\6e600d67fd5bca23a52d8e903ce2b470\transformed\ui-graphics-release\res
+com.vehicletrackingapp-material-icons-extended-release-20 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\70b294933c594b3ff5a8e1f4420bffce\transformed\material-icons-extended-release\res
+com.vehicletrackingapp-customview-poolingcontainer-1.0.0-21 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\7278b20c3656f9dc6559cec8b241a6b6\transformed\customview-poolingcontainer-1.0.0\res
+com.vehicletrackingapp-profileinstaller-1.3.1-22 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\74ec615e16506fc8287879824021c6ef\transformed\profileinstaller-1.3.1\res
+com.vehicletrackingapp-datastore-core-release-23 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\754e6b000f0a235030db13a51f3fe8c8\transformed\datastore-core-release\res
+com.vehicletrackingapp-sqlite-framework-2.4.0-24 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\7dadc15b32295972f4503a54801eb0ae\transformed\sqlite-framework-2.4.0\res
+com.vehicletrackingapp-appcompat-resources-1.6.1-25 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\83f03a04e780c8fb173ba709af56809b\transformed\appcompat-resources-1.6.1\res
+com.vehicletrackingapp-ui-unit-release-26 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\876ddff931523ba34b8ed06129876668\transformed\ui-unit-release\res
+com.vehicletrackingapp-datastore-release-27 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\8986e40c2a2abc857dcabd27544b72e6\transformed\datastore-release\res
+com.vehicletrackingapp-lifecycle-runtime-compose-release-28 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\8bed5156e9695aec03a147e679780c42\transformed\lifecycle-runtime-compose-release\res
+com.vehicletrackingapp-graphics-path-1.0.1-29 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\92b84039726d02708c3da6d52aebb5ba\transformed\graphics-path-1.0.1\res
+com.vehicletrackingapp-ui-geometry-release-30 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\a0ef2d6fdb75c4c18db998f0100f14c5\transformed\ui-geometry-release\res
+com.vehicletrackingapp-material-icons-core-release-31 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\a7a6d0e13e08fdeb6e4df3de783d15c6\transformed\material-icons-core-release\res
+com.vehicletrackingapp-animation-release-32 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\a9e1a027d3b7faa12acc5ca776c87c67\transformed\animation-release\res
+com.vehicletrackingapp-navigation-runtime-ktx-2.7.7-33 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\afdedde35b2ffb819fe4341014877784\transformed\navigation-runtime-ktx-2.7.7\res
+com.vehicletrackingapp-navigation-common-2.7.7-34 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\b4ec7bd73cb17a1d82dba0d5307c8a5e\transformed\navigation-common-2.7.7\res
+com.vehicletrackingapp-ui-tooling-data-release-35 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\bb34ffc2925d676c3cb543c4f1b9df48\transformed\ui-tooling-data-release\res
+com.vehicletrackingapp-room-runtime-2.6.1-36 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\c109a799604c40039a607684522af355\transformed\room-runtime-2.6.1\res
+com.vehicletrackingapp-savedstate-ktx-1.2.1-37 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\c1be53d149a0e015f045f36e8cc2a446\transformed\savedstate-ktx-1.2.1\res
+com.vehicletrackingapp-navigation-compose-2.7.7-38 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\c57c7d9a1d108a973c9a6f1d131eded8\transformed\navigation-compose-2.7.7\res
+com.vehicletrackingapp-ui-text-release-39 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\c8eec0224f8da789a90356356399884e\transformed\ui-text-release\res
+com.vehicletrackingapp-lifecycle-viewmodel-ktx-2.8.4-40 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\ca91d5b336cdd79659a711c5a0b7ab9e\transformed\lifecycle-viewmodel-ktx-2.8.4\res
+com.vehicletrackingapp-ui-util-release-41 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\cdb0ef0a9c4e665476a543f61e30e620\transformed\ui-util-release\res
+com.vehicletrackingapp-activity-ktx-1.9.1-42 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\d03bed0195b6de3d62323c66a30b3ddc\transformed\activity-ktx-1.9.1\res
+com.vehicletrackingapp-ui-release-43 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\d17fff744696a0b25fdcbeaeed5aa784\transformed\ui-release\res
+com.vehicletrackingapp-lifecycle-process-2.8.4-44 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\d33a2a76fe549bb64d57714a1a4b15dd\transformed\lifecycle-process-2.8.4\res
+com.vehicletrackingapp-lifecycle-viewmodel-compose-release-45 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\d4369ef43195938ca2380844dbd6889f\transformed\lifecycle-viewmodel-compose-release\res
+com.vehicletrackingapp-annotation-experimental-1.4.0-46 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\d4538e733c40bac72c188b40ab1e25a7\transformed\annotation-experimental-1.4.0\res
+com.vehicletrackingapp-runtime-release-47 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\de384c64b4072cc3ff7e18f866e68e12\transformed\runtime-release\res
+com.vehicletrackingapp-coil-base-2.6.0-48 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\dfe4837bd5bd5e507db279d01791c278\transformed\coil-base-2.6.0\res
+com.vehicletrackingapp-core-1.13.1-49 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\e079fb2bf9cf4a752ac34920b55589c0\transformed\core-1.13.1\res
+com.vehicletrackingapp-datastore-preferences-release-50 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\e8aff4466e1a54fd3a825539311bba4d\transformed\datastore-preferences-release\res
+com.vehicletrackingapp-lifecycle-viewmodel-savedstate-2.8.4-51 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\eb9dbed7c385cbed80442c6ad1cff924\transformed\lifecycle-viewmodel-savedstate-2.8.4\res
+com.vehicletrackingapp-core-ktx-1.13.1-52 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\eece5e658302d259aabc96e7d79f97c9\transformed\core-ktx-1.13.1\res
+com.vehicletrackingapp-lifecycle-livedata-core-2.8.4-53 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\f01468f6fea74e932bb582ec6af09d98\transformed\lifecycle-livedata-core-2.8.4\res
+com.vehicletrackingapp-navigation-runtime-2.7.7-54 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\f6e1d7736f13b0dcae667da5c04dc4da\transformed\navigation-runtime-2.7.7\res
+com.vehicletrackingapp-activity-compose-1.9.1-55 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\f7c634042bef67f0fcf7fbb28252ac01\transformed\activity-compose-1.9.1\res
+com.vehicletrackingapp-core-runtime-2.2.0-56 C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\fb585899dc6cab9d083c7723826edf01\transformed\core-runtime-2.2.0\res
+com.vehicletrackingapp-resValues-57 G:\jiju projects\VehicleTrackingApp-main\app\build\generated\res\resValues\debug
+com.vehicletrackingapp-packageDebugResources-58 G:\jiju projects\VehicleTrackingApp-main\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.vehicletrackingapp-packageDebugResources-59 G:\jiju projects\VehicleTrackingApp-main\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.vehicletrackingapp-debug-60 G:\jiju projects\VehicleTrackingApp-main\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.vehicletrackingapp-debug-61 G:\jiju projects\VehicleTrackingApp-main\app\src\debug\res
+com.vehicletrackingapp-main-62 G:\jiju projects\VehicleTrackingApp-main\app\src\main\res
