@@ -6,9 +6,9 @@ import io.ktor.server.config.*
 import java.util.*
 
 class JwtConfig(config: ApplicationConfig) {
-    private val secret = config.property("jwt.secret").getString()
-    private val issuer = config.property("jwt.issuer").getString()
-    private val audience = config.property("jwt.audience").getString()
+    private val secret = System.getenv("JWT_SECRET") ?: config.property("jwt.secret").getString()
+    private val issuer = System.getenv("JWT_ISSUER") ?: config.property("jwt.issuer").getString()
+    private val audience = System.getenv("JWT_AUDIENCE") ?: config.property("jwt.audience").getString()
     private val algorithm = Algorithm.HMAC256(secret)
 
     val verifier = JWT.require(algorithm)

@@ -13,9 +13,9 @@ object DatabaseConfig {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun init(config: ApplicationConfig) {
-        val url = config.property("database.url").getString()
-        val user = config.propertyOrNull("database.user")?.getString() ?: ""
-        val password = config.propertyOrNull("database.password")?.getString() ?: ""
+        val url = System.getenv("DATABASE_URL") ?: config.property("database.url").getString()
+        val user = System.getenv("DATABASE_USER") ?: config.propertyOrNull("database.user")?.getString() ?: ""
+        val password = System.getenv("DATABASE_PASSWORD") ?: config.propertyOrNull("database.password")?.getString() ?: ""
 
         val hikariConfig = HikariConfig().apply {
             jdbcUrl = url
