@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class RegisterRequest(
     val id: String,
     val name: String,
-    val email: String,
+    val email: String?,
     val phone: String,
     val password: String
 )
@@ -28,7 +28,7 @@ data class AuthResponse(
 data class UserDto(
     val id: String,
     val name: String,
-    val email: String,
+    val email: String?,
     val phone: String
 )
 

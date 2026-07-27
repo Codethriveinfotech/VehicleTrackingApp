@@ -9,7 +9,7 @@ import kotlinx.datetime.toLocalDateTime
 object Users : Table("users") {
     val id = text("id")
     val name = text("name")
-    val email = text("email").uniqueIndex()
+    val email = text("email").uniqueIndex().nullable()
     val phone = text("phone").uniqueIndex()
     val passwordHash = text("password_hash")
     val createdAt = datetime("created_at").default(Clock.System.now().toLocalDateTime(TimeZone.UTC))

@@ -16,7 +16,11 @@ class AuthService(
     private val jwtConfig: JwtConfig
 ) {
     suspend fun register(request: RegisterRequest): AuthResponse? {
-        if (userRepository.findByEmail(request.email) != null) return null
+        val email = if (request.email.isNullOrBlank()) null else request.email
+        
+        // Check uniqueness
+        if (email != null && userRepository.findByEmail(email) != null) return null
+        if (userRepository.findByPhone(request.phone) != null) return null
         
         val passwordHash = BCrypt.hashpw(request.password, BCrypt.gensalt())
         val now = Clock.System.now().toLocalDateTime(TimeZone.UTC)
@@ -24,7 +28,7 @@ class AuthService(
         val user = User(
             id = request.id,
             name = request.name,
-            email = request.email,
+            email = email,
             phone = request.phone,
             passwordHash = passwordHash,
             createdAt = now,
@@ -32,7 +36,7 @@ class AuthService(
         )
         
         userRepository.createUser(user) ?: return null
-        return login(LoginRequest(request.email, request.password))
+        return login(LoginRequest(email ?: request.phone, request.password))
     }
 
     suspend fun login(request: LoginRequest): AuthResponse? {

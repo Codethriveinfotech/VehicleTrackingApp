@@ -16,7 +16,7 @@ fun Route.authRoutes(authService: AuthService) {
             if (response != null) {
                 call.respond(HttpStatusCode.Created, ApiResponse.success(response, "User registered successfully"))
             } else {
-                call.respond(HttpStatusCode.BadRequest, ApiResponse.error("Email already exists or registration failed"))
+                call.respond(HttpStatusCode.BadRequest, ApiResponse.error("Registration failed. Phone or Email already exists."))
             }
         }
 

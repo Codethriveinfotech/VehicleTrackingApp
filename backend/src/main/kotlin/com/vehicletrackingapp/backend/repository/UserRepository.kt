@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 interface UserRepository {
     suspend fun createUser(user: User): User?
     suspend fun findById(id: String): User?
-    suspend fun findByEmail(email: String): User?
+    suspend fun findByEmail(email: String?): User?
     suspend fun findByPhone(phone: String): User?
     suspend fun findByIdentity(identity: String): User?
     suspend fun updateUser(user: User): Boolean
@@ -45,7 +45,8 @@ class UserRepositoryImpl : UserRepository {
             .singleOrNull()
     }
 
-    override suspend fun findByEmail(email: String): User? = dbQuery {
+    override suspend fun findByEmail(email: String?): User? = dbQuery {
+        if (email == null) return@dbQuery null
         Users.select { Users.email eq email }
             .map(::resultRowToUser)
             .singleOrNull()

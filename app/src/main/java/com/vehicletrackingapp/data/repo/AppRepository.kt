@@ -29,16 +29,19 @@ object AppRepository {
     
     private val dao get() = database?.dao()
 
-    private val api: ApiService by lazy {
-        Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/") // Ktor default port
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiService::class.java)
-    }
+    private var sessionManager: com.vehicletrackingapp.data.local.SessionManager? = null
+
+    // We make api lateinit or lazy, initialized after context is provided.
+    // However, as a singleton, we can just initialize it in `init()`.
+    lateinit var api: ApiService
+        private set
 
     fun init(context: Context) {
         if (database != null) return
+        
+        val sm = com.vehicletrackingapp.data.local.SessionManager(context)
+        sessionManager = sm
+        api = com.vehicletrackingapp.data.remote.RetrofitClient.create(sm)
         
         // Build database in IO thread to prevent main thread blocking/crashes
         CoroutineScope(Dispatchers.IO).launch {
@@ -70,10 +73,13 @@ object AppRepository {
         if (response.isSuccessful && response.body()?.success == true) {
             val authData = response.body()?.data
             if (authData != null) {
+                sessionManager?.saveAuthToken(authData.accessToken)
+                
                 val driver = Driver(
                     id = authData.user.id,
                     name = authData.user.name,
                     phone = authData.user.phone,
+                    email = authData.user.email ?: "",
                     licenseNumber = "", // Backend User doesn't have this yet, or we add it
                     password = password
                 )
@@ -139,11 +145,25 @@ object AppRepository {
     suspend fun deleteDriver(id: String) { try { dao?.deleteDriver(id) } catch (e: Exception) {} }
 
     fun getDraftTrip(driverId: String): Flow<TripEntry?> = dao?.getDraftTrip(driverId) ?: flowOf(null)
-    suspend fun upsertTrip(trip: TripEntry) { try { dao?.upsertTrip(trip) } catch (e: Exception) {} }
+    suspend fun upsertTrip(trip: TripEntry) { 
+        try { 
+            dao?.upsertTrip(trip)
+            api.createTrip(trip)
+        } catch (e: Exception) {
+            Log.e("AppRepository", "upsertTrip sync failed", e)
+        } 
+    }
     fun getSubmittedTrips(): Flow<List<TripEntry>> = dao?.getSubmittedTrips() ?: flowOf(emptyList())
 
     fun getDraftMaintenance(driverId: String): Flow<MaintenanceRecord?> = dao?.getDraftMaintenance(driverId) ?: flowOf(null)
-    suspend fun upsertMaintenance(record: MaintenanceRecord) { try { dao?.upsertMaintenance(record) } catch (e: Exception) {} }
+    suspend fun upsertMaintenance(record: MaintenanceRecord) { 
+        try { 
+            dao?.upsertMaintenance(record)
+            api.createMaintenance(record)
+        } catch (e: Exception) {
+            Log.e("AppRepository", "upsertMaintenance sync failed", e)
+        } 
+    }
     fun getSubmittedMaintenance(): Flow<List<MaintenanceRecord>> = dao?.getSubmittedMaintenance() ?: flowOf(emptyList())
 
     var adminUsername: String = "admin"
