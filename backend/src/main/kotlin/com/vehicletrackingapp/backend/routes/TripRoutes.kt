@@ -13,6 +13,11 @@ import io.ktor.server.routing.*
 fun Route.tripRoutes(tripRepository: TripRepository) {
     authenticate("auth-jwt") {
         route("/trips") {
+            get {
+                val trips = tripRepository.getAllTrips()
+                call.respond(ApiResponse.success(trips))
+            }
+
             get("/my") {
                 val principal = call.principal<JWTPrincipal>()
                 val driverId = principal?.payload?.subject ?: ""

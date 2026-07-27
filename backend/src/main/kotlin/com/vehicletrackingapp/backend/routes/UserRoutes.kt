@@ -11,13 +11,50 @@ import io.ktor.server.routing.*
 
 fun Route.userRoutes(userRepository: UserRepository) {
     authenticate("auth-jwt") {
+        route("/users") {
+            get {
+                val users = userRepository.getAllUsers().map { 
+                    UserDto(it.id, it.name, it.email, it.phone, it.licenseNumber, it.photoUri) 
+                }
+                call.respond(ApiResponse.success(users))
+            }
+
+            put("/{id}") {
+                val id = call.parameters["id"] ?: return@put call.respond(ApiResponse.error("Missing id"))
+                val updateReq = call.receive<UserDto>()
+                // Fetch existing to retain password and dates
+                val existing = userRepository.findById(id) ?: return@put call.respond(ApiResponse.error("User not found"))
+                val updatedUser = existing.copy(
+                    name = updateReq.name,
+                    email = updateReq.email,
+                    phone = updateReq.phone,
+                    licenseNumber = updateReq.licenseNumber,
+                    photoUri = updateReq.photoUri
+                )
+                if (userRepository.updateUser(updatedUser)) {
+                    call.respond(ApiResponse.success(true, "User updated"))
+                } else {
+                    call.respond(ApiResponse.error("Failed to update user"))
+                }
+            }
+
+            delete("/{id}") {
+                val id = call.parameters["id"] ?: return@delete call.respond(ApiResponse.error("Missing id"))
+                if (userRepository.deleteUser(id)) {
+                    call.respond(ApiResponse.success(true, "User deleted"))
+                } else {
+                    call.respond(ApiResponse.error("Failed to delete user"))
+                }
+            }
+        }
+
         route("/user") {
             get("/profile") {
                 val principal = call.principal<JWTPrincipal>()
                 val userId = principal?.payload?.subject ?: ""
                 val user = userRepository.findById(userId)
                 if (user != null) {
-                    call.respond(ApiResponse.success(UserDto(user.id, user.name, user.email, user.phone)))
+                    call.respond(ApiResponse.success(UserDto(user.id, user.name, user.email, user.phone, user.licenseNumber, user.photoUri)))
                 } else {
                     call.respond(ApiResponse.error("User not found"))
                 }

@@ -1,122 +1,122 @@
 package com.vehicletrackingapp.data.repo
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
-import com.vehicletrackingapp.data.local.AppDatabase
+import com.google.gson.Gson
 import com.vehicletrackingapp.data.model.Driver
 import com.vehicletrackingapp.data.model.MaintenanceRecord
 import com.vehicletrackingapp.data.model.TripEntry
 import com.vehicletrackingapp.data.model.Vehicle
 import com.vehicletrackingapp.data.remote.ApiService
 import com.vehicletrackingapp.data.remote.LoginRequest
+import com.vehicletrackingapp.data.remote.UserDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.UUID
 
 /**
- * Enterprise Repository with Neon Postgres Sync logic.
+ * Enterprise Repository connected directly to Remote Database via ApiService.
  */
 object AppRepository {
 
-    @Volatile
-    private var database: AppDatabase? = null
-    
-    private val dao get() = database?.dao()
-
     private var sessionManager: com.vehicletrackingapp.data.local.SessionManager? = null
-
-    // We make api lateinit or lazy, initialized after context is provided.
-    // However, as a singleton, we can just initialize it in `init()`.
     lateinit var api: ApiService
         private set
+        
+    private lateinit var prefs: SharedPreferences
+    private val gson = Gson()
+
+    private val _vehicles = MutableStateFlow<List<Vehicle>>(emptyList())
+    private val _drivers = MutableStateFlow<List<Driver>>(emptyList())
+    private val _submittedTrips = MutableStateFlow<List<TripEntry>>(emptyList())
+    private val _submittedMaintenance = MutableStateFlow<List<MaintenanceRecord>>(emptyList())
+    
+    private val _draftTrip = MutableStateFlow<TripEntry?>(null)
+    private val _draftMaintenance = MutableStateFlow<MaintenanceRecord?>(null)
 
     fun init(context: Context) {
-        if (database != null) return
-        
+        if (sessionManager != null) return
         val sm = com.vehicletrackingapp.data.local.SessionManager(context)
         sessionManager = sm
         api = com.vehicletrackingapp.data.remote.RetrofitClient.create(sm)
+        prefs = context.getSharedPreferences("app_drafts", Context.MODE_PRIVATE)
         
-        // Build database in IO thread to prevent main thread blocking/crashes
+        loadDrafts()
+        
         CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val db = AppDatabase.getDatabase(context)
-                database = db
-                
-                // Seed initial data if empty
-                val drivers = db.dao().getAllDrivers().first()
-                if (drivers.isEmpty()) {
-                    db.dao().upsertDriver(Driver(id = "d1", name = "Sohith", phone = "9876543210", licenseNumber = "TN-01-2020-0001", password = "1234"))
-                    db.dao().upsertDriver(Driver(id = "d2", name = "Dimpal", phone = "9876500000", licenseNumber = "TN-01-2019-0002", password = "1234"))
-                }
-                val vehicles = db.dao().getAllVehicles().first()
-                if (vehicles.isEmpty()) {
-                    db.dao().upsertVehicle(Vehicle(id = "v1", number = "TN-58-AB-1234", model = "Bobcat S450", assignedDriverId = "d1"))
-                    db.dao().upsertVehicle(Vehicle(id = "v2", number = "TN-58-CD-5678", model = "JCB 135", assignedDriverId = "d2"))
-                }
-                Log.d("AppRepository", "Database initialized and seeded.")
-            } catch (e: Exception) {
-                Log.e("AppRepository", "Initialization failed", e)
-            }
+            syncPendingData()
         }
+    }
+    
+    private fun loadDrafts() {
+        val tripJson = prefs.getString("draft_trip", null)
+        if (tripJson != null) _draftTrip.value = gson.fromJson(tripJson, TripEntry::class.java)
+        
+        val mainJson = prefs.getString("draft_maintenance", null)
+        if (mainJson != null) _draftMaintenance.value = gson.fromJson(mainJson, MaintenanceRecord::class.java)
+    }
+    
+    private fun saveDraftTrip(trip: TripEntry?) {
+        _draftTrip.value = trip
+        prefs.edit().putString("draft_trip", if (trip != null) gson.toJson(trip) else null).apply()
+    }
+    
+    private fun saveDraftMaintenance(record: MaintenanceRecord?) {
+        _draftMaintenance.value = record
+        prefs.edit().putString("draft_maintenance", if (record != null) gson.toJson(record) else null).apply()
     }
 
     suspend fun findDriver(identity: String, password: String): Driver? = try {
-        // 1. Try Remote First
         val response = api.login(LoginRequest(identity, password))
         if (response.isSuccessful && response.body()?.success == true) {
             val authData = response.body()?.data
             if (authData != null) {
                 sessionManager?.saveAuthToken(authData.accessToken)
-                
-                val driver = Driver(
+                Driver(
                     id = authData.user.id,
                     name = authData.user.name,
                     phone = authData.user.phone,
                     email = authData.user.email ?: "",
-                    licenseNumber = "", // Backend User doesn't have this yet, or we add it
+                    licenseNumber = authData.user.licenseNumber ?: "",
+                    photoUri = authData.user.photoUri ?: "",
                     password = password
                 )
-                dao?.upsertDriver(driver)
-                driver
             } else null
-        } else {
-            // 2. Fallback to Local
-            dao?.findDriver(identity, password)
-        }
+        } else null
     } catch (e: Exception) {
-        Log.e("AppRepository", "findDriver error, falling back to local", e)
-        dao?.findDriver(identity, password)
+        Log.e("AppRepository", "findDriver error", e)
+        null
     }
 
     suspend fun signUp(driver: Driver) { 
         try { 
-            dao?.upsertDriver(driver) 
             val request = com.vehicletrackingapp.data.remote.RegisterRequest(
                 id = driver.id,
                 name = driver.name,
                 email = driver.email,
                 phone = driver.phone,
-                password = driver.password
+                password = driver.password,
+                licenseNumber = driver.licenseNumber,
+                photoUri = driver.photoUri
             )
-            api.signUp(request) // Push to Neon
+            api.signUp(request)
+            fetchDrivers()
         } catch (e: Exception) {
             Log.e("AppRepository", "SignUp sync failed", e)
         } 
     }
     
-    fun getAllVehicles(): Flow<List<Vehicle>> = dao?.getAllVehicles() ?: flowOf(emptyList())
+    fun getAllVehicles(): Flow<List<Vehicle>> = _vehicles.asStateFlow()
 
     suspend fun addVehicle(vehicle: Vehicle) { 
         try { 
-            dao?.upsertVehicle(vehicle) 
-            api.saveVehicle(vehicle) // Push to Neon
+            api.saveVehicle(vehicle)
+            fetchVehicles()
         } catch (e: Exception) {
             Log.e("AppRepository", "AddVehicle sync failed", e)
         } 
@@ -125,46 +125,114 @@ object AppRepository {
     fun syncPendingData() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Fetch vehicles from remote
-                val response = api.getVehicles()
-                if (response.isSuccessful && response.body()?.success == true) {
-                    response.body()?.data?.forEach { dao?.upsertVehicle(it) }
-                }
-                
+                fetchVehicles()
+                fetchDrivers()
+                fetchTrips()
+                fetchMaintenance()
                 Log.d("AppRepository", "Data sync complete")
             } catch (e: Exception) {
                 Log.e("AppRepository", "Periodic sync failed", e)
             }
         }
     }
-    suspend fun updateVehicle(vehicle: Vehicle) { try { dao?.upsertVehicle(vehicle) } catch (e: Exception) {} }
-    suspend fun deleteVehicle(id: String) { try { dao?.deleteVehicle(id) } catch (e: Exception) {} }
+    
+    private suspend fun fetchVehicles() {
+        val response = api.getVehicles()
+        if (response.isSuccessful) response.body()?.data?.let { _vehicles.value = it }
+    }
+    
+    private suspend fun fetchDrivers() {
+        val response = api.getAllUsers()
+        if (response.isSuccessful) {
+            response.body()?.data?.let { users ->
+                _drivers.value = users.map { Driver(it.id, it.name, it.phone, it.email ?: "", it.licenseNumber ?: "", "1234", it.photoUri) }
+            }
+        }
+    }
+    
+    private suspend fun fetchTrips() {
+        val response = api.getAllTrips()
+        if (response.isSuccessful) response.body()?.data?.let { _submittedTrips.value = it }
+    }
+    
+    private suspend fun fetchMaintenance() {
+        val response = api.getAllMaintenance()
+        if (response.isSuccessful) response.body()?.data?.let { _submittedMaintenance.value = it }
+    }
 
-    fun getAllDrivers(): Flow<List<Driver>> = dao?.getAllDrivers() ?: flowOf(emptyList())
-    suspend fun updateDriver(driver: Driver) { try { dao?.upsertDriver(driver) } catch (e: Exception) {} }
-    suspend fun deleteDriver(id: String) { try { dao?.deleteDriver(id) } catch (e: Exception) {} }
+    suspend fun updateVehicle(vehicle: Vehicle) { 
+        try { 
+            api.updateVehicle(vehicle.id, vehicle)
+            fetchVehicles()
+        } catch (e: Exception) {} 
+    }
+    
+    suspend fun deleteVehicle(id: String) { 
+        try { 
+            api.deleteVehicle(id)
+            fetchVehicles()
+        } catch (e: Exception) {} 
+    }
 
-    fun getDraftTrip(driverId: String): Flow<TripEntry?> = dao?.getDraftTrip(driverId) ?: flowOf(null)
+    fun getAllDrivers(): Flow<List<Driver>> = _drivers.asStateFlow()
+    
+    suspend fun updateDriver(driver: Driver) { 
+        try { 
+            api.updateUser(driver.id, UserDto(driver.id, driver.name, driver.email, driver.phone, driver.licenseNumber, driver.photoUri))
+            fetchDrivers()
+        } catch (e: Exception) {} 
+    }
+    
+    suspend fun deleteDriver(id: String) { 
+        try { 
+            api.deleteUser(id)
+            fetchDrivers()
+        } catch (e: Exception) {} 
+    }
+
+    fun getDraftTrip(driverId: String): Flow<TripEntry?> = _draftTrip.asStateFlow()
+    
     suspend fun upsertTrip(trip: TripEntry) { 
         try { 
-            dao?.upsertTrip(trip)
-            api.createTrip(trip)
+            if (trip.status == "draft") {
+                saveDraftTrip(trip)
+            } else {
+                saveDraftTrip(null) // clear draft
+                val exists = _submittedTrips.value.any { it.id == trip.id }
+                if (exists) {
+                    api.updateTrip(trip.id, trip)
+                } else {
+                    api.createTrip(trip)
+                }
+                fetchTrips()
+            }
         } catch (e: Exception) {
             Log.e("AppRepository", "upsertTrip sync failed", e)
         } 
     }
-    fun getSubmittedTrips(): Flow<List<TripEntry>> = dao?.getSubmittedTrips() ?: flowOf(emptyList())
+    fun getSubmittedTrips(): Flow<List<TripEntry>> = _submittedTrips.asStateFlow()
 
-    fun getDraftMaintenance(driverId: String): Flow<MaintenanceRecord?> = dao?.getDraftMaintenance(driverId) ?: flowOf(null)
+    fun getDraftMaintenance(driverId: String): Flow<MaintenanceRecord?> = _draftMaintenance.asStateFlow()
+    
     suspend fun upsertMaintenance(record: MaintenanceRecord) { 
         try { 
-            dao?.upsertMaintenance(record)
-            api.createMaintenance(record)
+            if (record.status == "draft") {
+                saveDraftMaintenance(record)
+            } else {
+                saveDraftMaintenance(null)
+                val exists = _submittedMaintenance.value.any { it.id == record.id }
+                if (exists) {
+                    api.updateMaintenance(record.id, record)
+                } else {
+                    api.createMaintenance(record)
+                }
+                fetchMaintenance()
+            }
         } catch (e: Exception) {
             Log.e("AppRepository", "upsertMaintenance sync failed", e)
         } 
     }
-    fun getSubmittedMaintenance(): Flow<List<MaintenanceRecord>> = dao?.getSubmittedMaintenance() ?: flowOf(emptyList())
+    fun getSubmittedMaintenance(): Flow<List<MaintenanceRecord>> = _submittedMaintenance.asStateFlow()
 
     var adminUsername: String = "admin"
     var adminPassword: String = "admin123"

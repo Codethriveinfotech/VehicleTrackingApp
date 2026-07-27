@@ -13,6 +13,8 @@ interface UserRepository {
     suspend fun findByPhone(phone: String): User?
     suspend fun findByIdentity(identity: String): User?
     suspend fun updateUser(user: User): Boolean
+    suspend fun getAllUsers(): List<User>
+    suspend fun deleteUser(id: String): Boolean
 }
 
 class UserRepositoryImpl : UserRepository {
@@ -22,6 +24,8 @@ class UserRepositoryImpl : UserRepository {
         email = row[Users.email],
         phone = row[Users.phone],
         passwordHash = row[Users.passwordHash],
+        licenseNumber = row[Users.licenseNumber],
+        photoUri = row[Users.photoUri],
         createdAt = row[Users.createdAt],
         updatedAt = row[Users.updatedAt]
     )
@@ -33,6 +37,8 @@ class UserRepositoryImpl : UserRepository {
             it[email] = user.email
             it[phone] = user.phone
             it[passwordHash] = user.passwordHash
+            it[licenseNumber] = user.licenseNumber
+            it[photoUri] = user.photoUri
             it[createdAt] = user.createdAt
             it[updatedAt] = user.updatedAt
         }
@@ -69,7 +75,17 @@ class UserRepositoryImpl : UserRepository {
             it[name] = user.name
             it[email] = user.email
             it[phone] = user.phone
+            it[licenseNumber] = user.licenseNumber
+            it[photoUri] = user.photoUri
             it[updatedAt] = user.updatedAt
         } > 0
+    }
+
+    override suspend fun getAllUsers(): List<User> = dbQuery {
+        Users.selectAll().map(::resultRowToUser)
+    }
+
+    override suspend fun deleteUser(id: String): Boolean = dbQuery {
+        Users.deleteWhere { Users.id eq id } > 0
     }
 }

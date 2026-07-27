@@ -10,6 +10,8 @@ data class User(
     val email: String?,
     val phone: String,
     val passwordHash: String,
+    val licenseNumber: String?,
+    val photoUri: String?,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime
 )

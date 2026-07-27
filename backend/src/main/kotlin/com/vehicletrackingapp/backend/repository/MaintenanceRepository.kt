@@ -13,6 +13,7 @@ interface MaintenanceRepository {
     suspend fun getRecordsByDriver(driverId: String): List<MaintenanceModel>
     suspend fun updateRecord(record: MaintenanceModel): Boolean
     suspend fun deleteRecord(id: String): Boolean
+    suspend fun getAllRecords(): List<MaintenanceModel>
 }
 
 class MaintenanceRepositoryImpl : MaintenanceRepository {
@@ -88,5 +89,9 @@ class MaintenanceRepositoryImpl : MaintenanceRepository {
 
     override suspend fun deleteRecord(id: String): Boolean = dbQuery {
         Maintenance.deleteWhere { Maintenance.id eq id } > 0
+    }
+
+    override suspend fun getAllRecords(): List<MaintenanceModel> = dbQuery {
+        Maintenance.selectAll().map(::resultRowToMaintenance)
     }
 }

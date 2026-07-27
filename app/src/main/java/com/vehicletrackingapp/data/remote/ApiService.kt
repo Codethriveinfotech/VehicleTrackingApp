@@ -23,12 +23,25 @@ interface ApiService {
     @GET("api/user/profile")
     suspend fun getProfile(): Response<ApiResponse<UserDto>>
 
+    // Admin Users/Drivers
+    @GET("api/users")
+    suspend fun getAllUsers(): Response<ApiResponse<List<UserDto>>>
+
+    @PUT("api/users/{id}")
+    suspend fun updateUser(@Path("id") id: String, @Body user: UserDto): Response<ApiResponse<Boolean>>
+
+    @DELETE("api/users/{id}")
+    suspend fun deleteUser(@Path("id") id: String): Response<ApiResponse<Boolean>>
+
     // Vehicles
     @GET("api/vehicles")
     suspend fun getVehicles(): Response<ApiResponse<List<Vehicle>>>
 
     @POST("api/vehicles")
-    suspend fun saveVehicle(@Body vehicle: Vehicle): Response<ApiResponse<Unit>>
+    suspend fun saveVehicle(@Body vehicle: Vehicle): Response<ApiResponse<Vehicle>>
+    
+    @DELETE("api/vehicles/{id}")
+    suspend fun deleteVehicle(@Path("id") id: String): Response<ApiResponse<Boolean>>
     
     @PUT("api/vehicles/{id}")
     suspend fun updateVehicle(@Path("id") id: String, @Body vehicle: Vehicle): Response<ApiResponse<Boolean>>
@@ -36,6 +49,9 @@ interface ApiService {
     // Trips
     @GET("api/trips/my")
     suspend fun getMyTrips(): Response<ApiResponse<List<TripEntry>>>
+
+    @GET("api/trips")
+    suspend fun getAllTrips(): Response<ApiResponse<List<TripEntry>>>
 
     @POST("api/trips")
     suspend fun createTrip(@Body trip: TripEntry): Response<ApiResponse<TripEntry>>
@@ -47,6 +63,9 @@ interface ApiService {
     @GET("api/maintenance/my")
     suspend fun getMyMaintenance(): Response<ApiResponse<List<MaintenanceRecord>>>
 
+    @GET("api/maintenance")
+    suspend fun getAllMaintenance(): Response<ApiResponse<List<MaintenanceRecord>>>
+
     @POST("api/maintenance")
     suspend fun createMaintenance(@Body record: MaintenanceRecord): Response<ApiResponse<MaintenanceRecord>>
     
@@ -55,7 +74,7 @@ interface ApiService {
 }
 
 // DTOs matching Backend
-data class RegisterRequest(val id: String, val name: String, val email: String?, val phone: String, val password: String)
+data class RegisterRequest(val id: String, val name: String, val email: String?, val phone: String, val password: String, val licenseNumber: String? = null, val photoUri: String? = null)
 data class LoginRequest(val identity: String, val password: String)
 data class RefreshRequest(val refreshToken: String)
 
@@ -75,5 +94,7 @@ data class UserDto(
     val id: String,
     val name: String,
     val email: String?,
-    val phone: String
+    val phone: String,
+    val licenseNumber: String? = null,
+    val photoUri: String? = null
 )

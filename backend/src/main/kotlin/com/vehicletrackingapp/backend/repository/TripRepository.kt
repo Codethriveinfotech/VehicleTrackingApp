@@ -13,6 +13,7 @@ interface TripRepository {
     suspend fun getTripsByVehicle(vehicleId: String): List<Trip>
     suspend fun updateTrip(trip: Trip): Boolean
     suspend fun deleteTrip(id: String): Boolean
+    suspend fun getAllTrips(): List<Trip>
 }
 
 class TripRepositoryImpl : TripRepository {
@@ -109,5 +110,9 @@ class TripRepositoryImpl : TripRepository {
 
     override suspend fun deleteTrip(id: String): Boolean = dbQuery {
         Trips.deleteWhere { Trips.id eq id } > 0
+    }
+
+    override suspend fun getAllTrips(): List<Trip> = dbQuery {
+        Trips.selectAll().map(::resultRowToTrip)
     }
 }

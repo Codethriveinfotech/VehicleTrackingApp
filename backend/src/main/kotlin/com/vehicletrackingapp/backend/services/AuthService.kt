@@ -31,6 +31,8 @@ class AuthService(
             email = email,
             phone = request.phone,
             passwordHash = passwordHash,
+            licenseNumber = request.licenseNumber,
+            photoUri = request.photoUri,
             createdAt = now,
             updatedAt = now
         )
@@ -52,7 +54,7 @@ class AuthService(
         return AuthResponse(
             accessToken = accessToken,
             refreshToken = refreshToken,
-            user = UserDto(user.id, user.name, user.email, user.phone)
+            user = UserDto(user.id, user.name, user.email, user.phone, user.licenseNumber, user.photoUri)
         )
     }
 
@@ -70,7 +72,7 @@ class AuthService(
         return AuthResponse(
             accessToken = newAccessToken,
             refreshToken = newRefreshToken,
-            user = UserDto(user.id, user.name, user.email, user.phone)
+            user = UserDto(user.id, user.name, user.email, user.phone, user.licenseNumber, user.photoUri)
         )
     }
 

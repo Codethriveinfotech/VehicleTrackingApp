@@ -13,6 +13,11 @@ import io.ktor.server.routing.*
 fun Route.maintenanceRoutes(maintenanceRepository: MaintenanceRepository) {
     authenticate("auth-jwt") {
         route("/maintenance") {
+            get {
+                val records = maintenanceRepository.getAllRecords()
+                call.respond(ApiResponse.success(records))
+            }
+
             get("/my") {
                 val principal = call.principal<JWTPrincipal>()
                 val driverId = principal?.payload?.subject ?: ""
