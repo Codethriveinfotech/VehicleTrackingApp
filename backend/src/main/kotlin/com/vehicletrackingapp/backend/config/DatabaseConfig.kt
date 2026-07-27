@@ -8,14 +8,18 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.slf4j.LoggerFactory
+import io.github.cdimascio.dotenv.dotenv
 
 object DatabaseConfig {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun init(config: ApplicationConfig) {
-        val url = System.getenv("DATABASE_URL") ?: config.property("database.url").getString()
-        val user = System.getenv("DATABASE_USER") ?: config.propertyOrNull("database.user")?.getString() ?: ""
-        val password = System.getenv("DATABASE_PASSWORD") ?: config.propertyOrNull("database.password")?.getString() ?: ""
+        val dotenv = dotenv {
+            ignoreIfMissing = true
+        }
+        val url = dotenv["DATABASE_URL"] ?: System.getenv("DATABASE_URL") ?: config.property("database.url").getString()
+        val user = dotenv["DATABASE_USER"] ?: System.getenv("DATABASE_USER") ?: config.propertyOrNull("database.user")?.getString() ?: ""
+        val password = dotenv["DATABASE_PASSWORD"] ?: System.getenv("DATABASE_PASSWORD") ?: config.propertyOrNull("database.password")?.getString() ?: ""
 
         val hikariConfig = HikariConfig().apply {
             jdbcUrl = url

@@ -35,6 +35,7 @@ dependencies {
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("ch.qos.logback:logback-classic:1.4.14")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 }
 
 application {
