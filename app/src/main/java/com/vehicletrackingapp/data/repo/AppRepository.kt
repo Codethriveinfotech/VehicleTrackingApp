@@ -77,6 +77,7 @@ object AppRepository {
             val authData = response.body()?.data
             if (authData != null) {
                 sessionManager?.saveAuthToken(authData.accessToken)
+                syncPendingData() // Fetch vehicles and other data
                 Driver(
                     id = authData.user.id,
                     name = authData.user.name,
