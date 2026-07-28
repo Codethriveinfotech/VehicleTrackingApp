@@ -25,6 +25,7 @@ import com.vehicletrackingapp.ui.components.SpatialBackground
 import com.vehicletrackingapp.ui.screens.common.BentoTile
 import com.vehicletrackingapp.ui.screens.common.SectionTitle
 import com.vehicletrackingapp.ui.theme.*
+import com.vehicletrackingapp.data.repo.AppRepository
 import kotlinx.coroutines.launch
 
 private data class AdminMenuItem(
@@ -172,13 +173,23 @@ fun AdminDashboardScreen(onLogout: () -> Unit) {
 
 @Composable
 fun AdminSummaryScreen() {
+    val vehicles by AppRepository.getAllVehicles().collectAsState(initial = emptyList())
+    val trips by AppRepository.getAllTrips().collectAsState(initial = emptyList())
+    val drivers by AppRepository.getAllDrivers().collectAsState(initial = emptyList())
+    val maintenance by AppRepository.getAllMaintenance().collectAsState(initial = emptyList())
+
+    val activeVehicles = vehicles.count { it.status.equals("Active", ignoreCase = true) }.toString()
+    val onTrip = trips.count { it.endTime.isBlank() || it.status.equals("draft", ignoreCase = true) }.toString()
+    val totalDrivers = drivers.size.toString()
+    val maintenanceCount = maintenance.size.toString()
+
     Column(modifier = Modifier.fillMaxSize().padding(vertical = 16.dp)) {
         SectionTitle("FLEET OVERVIEW")
         
         Row(modifier = Modifier.fillMaxWidth()) {
             BentoTile(
                 title = "ACTIVE VEHICLES",
-                value = "12",
+                value = if (activeVehicles.length == 1) "0$activeVehicles" else activeVehicles,
                 icon = Icons.Default.DirectionsCar,
                 color = BrandBlue,
                 modifier = Modifier.weight(1f)
@@ -186,7 +197,7 @@ fun AdminSummaryScreen() {
             Spacer(modifier = Modifier.width(16.dp))
             BentoTile(
                 title = "ON-TRIP",
-                value = "08",
+                value = if (onTrip.length == 1) "0$onTrip" else onTrip,
                 icon = Icons.Default.Route,
                 color = SuccessEmerald,
                 modifier = Modifier.weight(1f)
@@ -198,7 +209,7 @@ fun AdminSummaryScreen() {
         Row(modifier = Modifier.fillMaxWidth()) {
             BentoTile(
                 title = "MAINTENANCE",
-                value = "03",
+                value = if (maintenanceCount.length == 1) "0$maintenanceCount" else maintenanceCount,
                 icon = Icons.Default.Build,
                 color = WarningSunset,
                 modifier = Modifier.weight(1f)
@@ -206,7 +217,7 @@ fun AdminSummaryScreen() {
             Spacer(modifier = Modifier.width(16.dp))
             BentoTile(
                 title = "TOTAL DRIVERS",
-                value = "15",
+                value = if (totalDrivers.length == 1) "0$totalDrivers" else totalDrivers,
                 icon = Icons.Default.Group,
                 color = BrandIndigo,
                 modifier = Modifier.weight(1f)
