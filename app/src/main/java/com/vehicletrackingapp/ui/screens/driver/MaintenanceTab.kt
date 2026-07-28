@@ -88,13 +88,14 @@ fun MaintenanceTab(driverId: String) {
                         value = if (selectedType == "Other") "Other: $customType" else selectedType.ifBlank { "Select Category" },
                         onValueChange = {},
                         readOnly = true,
-                        modifier = Modifier.fillMaxWidth().clickable { typeMenuExpanded = true },
+                        modifier = Modifier.fillMaxWidth(),
                         label = { Text("Service Type", fontWeight = FontWeight.Bold) },
                         trailingIcon = { Icon(Icons.Default.ArrowDropDown, null, tint = BrandBlue) },
                         shape = RoundedCornerShape(20.dp),
                         enabled = false,
                         colors = OutlinedTextFieldDefaults.colors(disabledTextColor = Color.Black, disabledBorderColor = Color.Black.copy(alpha = 0.08f), disabledLabelColor = TextHint)
                     )
+                    Box(modifier = Modifier.matchParentSize().background(Color.Transparent).clickable { typeMenuExpanded = true })
                     DropdownMenu(expanded = typeMenuExpanded, onDismissRequest = { typeMenuExpanded = false }) {
                         categories.forEach { cat ->
                             DropdownMenuItem(

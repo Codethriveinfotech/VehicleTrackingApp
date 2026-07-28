@@ -142,12 +142,13 @@ fun TripDetailsTab(driverId: String) {
                         value = selectedVehicle?.let { "${it.number} (${it.model})" } ?: "Select Vehicle",
                         onValueChange = {},
                         readOnly = true,
-                        modifier = Modifier.fillMaxWidth().clickable { vehicleMenuExpanded = true },
+                        modifier = Modifier.fillMaxWidth(),
                         label = { Text("Active Fleet Asset", fontWeight = FontWeight.Bold) },
                         trailingIcon = { Icon(Icons.Default.ArrowDropDown, null, tint = BrandBlue) },
                         shape = RoundedCornerShape(20.dp),
                         colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = BrandBlue, unfocusedBorderColor = Color.Black.copy(alpha = 0.08f))
                     )
+                    Box(modifier = Modifier.matchParentSize().background(Color.Transparent).clickable { vehicleMenuExpanded = true })
                     DropdownMenu(expanded = vehicleMenuExpanded, onDismissRequest = { vehicleMenuExpanded = false }) {
                         allVehicles.forEach { vehicle ->
                             DropdownMenuItem(
