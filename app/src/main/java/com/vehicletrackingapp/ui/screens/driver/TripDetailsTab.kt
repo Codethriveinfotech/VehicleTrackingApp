@@ -272,7 +272,7 @@ fun TripDetailsTab(driverId: String) {
                 } else {
                     scope.launch {
                         val trip = draftFlow.value ?: return@launch
-                        AppRepository.upsertTrip(trip.copy(
+                        val success = AppRepository.upsertTrip(trip.copy(
                             vehicleId = selectedVehicleId,
                             sourceLocation = source, destinationLocation = destination,
                             startDate = startDate, startTime = startTime, startOdometer = startOdo,
@@ -283,9 +283,17 @@ fun TripDetailsTab(driverId: String) {
                             fuelLevel = fuel, tripPurpose = purpose, notes = notes,
                             status = "submitted"
                         ))
-                        submitted = true
-                        error = null
-                        isInitialized = false 
+                        if (success) {
+                            submitted = true
+                            error = null
+                            // Clear form
+                            selectedVehicleId = null; source = ""; destination = ""; startDate = ""; startTime = ""
+                            startOdo = ""; startOdoUri = null; startPlateUri = null; endDate = ""; endTime = ""
+                            endOdo = ""; endOdoUri = null; fuel = "Full"; purpose = "Delivery"; notes = ""
+                            isInitialized = false 
+                        } else {
+                            error = "ERROR: Failed to save to database. Please check your connection."
+                        }
                     }
                 }
             }

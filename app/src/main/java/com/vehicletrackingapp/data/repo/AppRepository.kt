@@ -221,46 +221,50 @@ object AppRepository {
 
     fun getDraftTrip(driverId: String): Flow<TripEntry?> = _draftTrip.asStateFlow()
     
-    suspend fun upsertTrip(trip: TripEntry) { 
+    suspend fun upsertTrip(trip: TripEntry): Boolean { 
         try { 
             if (trip.status == "draft") {
                 saveDraftTrip(trip)
+                return true
             } else {
-                saveDraftTrip(null) // clear draft
                 val exists = _submittedTrips.value.any { it.id == trip.id }
-                if (exists) {
-                    api.updateTrip(trip.id, trip)
-                } else {
-                    api.createTrip(trip)
+                val response = if (exists) api.updateTrip(trip.id, trip) else api.createTrip(trip)
+                if (response.isSuccessful && response.body()?.success == true) {
+                    saveDraftTrip(null) // clear draft only on success
+                    fetchTrips()
+                    return true
                 }
-                fetchTrips()
+                return false
             }
         } catch (e: Exception) {
-            Log.e("AppRepository", "upsertTrip sync failed", e)
+            return false
         } 
     }
+
     fun getAllTrips(): Flow<List<TripEntry>> = _submittedTrips.asStateFlow()
 
     fun getDraftMaintenance(driverId: String): Flow<MaintenanceRecord?> = _draftMaintenance.asStateFlow()
-    
-    suspend fun upsertMaintenance(record: MaintenanceRecord) { 
+
+    suspend fun upsertMaintenance(record: MaintenanceRecord): Boolean { 
         try { 
             if (record.status == "draft") {
                 saveDraftMaintenance(record)
+                return true
             } else {
-                saveDraftMaintenance(null)
                 val exists = _submittedMaintenance.value.any { it.id == record.id }
-                if (exists) {
-                    api.updateMaintenance(record.id, record)
-                } else {
-                    api.createMaintenance(record)
+                val response = if (exists) api.updateMaintenance(record.id, record) else api.createMaintenance(record)
+                if (response.isSuccessful && response.body()?.success == true) {
+                    saveDraftMaintenance(null)
+                    fetchMaintenance()
+                    return true
                 }
-                fetchMaintenance()
+                return false
             }
         } catch (e: Exception) {
-            Log.e("AppRepository", "upsertMaintenance sync failed", e)
+            return false
         } 
     }
+
     fun getAllMaintenance(): Flow<List<MaintenanceRecord>> = _submittedMaintenance.asStateFlow()
 
     var adminUsername: String = "admin"

@@ -177,7 +177,7 @@ fun MaintenanceTab(driverId: String) {
                 } else {
                     scope.launch {
                         val finalType = if (selectedType == "Other") customType else selectedType
-                        AppRepository.upsertMaintenance(
+                        val success = AppRepository.upsertMaintenance(
                             MaintenanceRecord(
                                 id = AppRepository.newId(),
                                 vehicleId = vehicle.id,
@@ -191,10 +191,14 @@ fun MaintenanceTab(driverId: String) {
                                 status = "submitted"
                             )
                         )
-                        saved = true
-                        error = null
-                        // Clear
-                        selectedType = ""; customType = ""; description = ""; date = ""; time = ""; cost = ""; billUri = null
+                        if (success) {
+                            saved = true
+                            error = null
+                            // Clear
+                            selectedType = ""; customType = ""; description = ""; date = ""; time = ""; cost = ""; billUri = null
+                        } else {
+                            error = "ERROR: Failed to save to database. Please check your connection."
+                        }
                     }
                 }
             }
