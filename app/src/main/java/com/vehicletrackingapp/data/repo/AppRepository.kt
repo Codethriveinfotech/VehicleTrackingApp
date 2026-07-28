@@ -99,6 +99,7 @@ object AppRepository {
             val authData = response.body()?.data
             if (authData != null) {
                 sessionManager?.saveAuthToken(authData.accessToken)
+                syncPendingData() // Fetch all data now that we are authenticated
                 true
             } else false
         } else false
