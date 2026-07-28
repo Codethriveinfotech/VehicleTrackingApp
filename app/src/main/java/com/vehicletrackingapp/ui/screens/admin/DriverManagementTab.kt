@@ -89,7 +89,13 @@ fun DriverManagementTab() {
             driver = editingDriver,
             onDismiss = { showDialog = false },
             onSave = { d ->
-                scope.launch { AppRepository.updateDriver(d) }
+                scope.launch { 
+                    if (editingDriver == null) {
+                        AppRepository.signUp(d)
+                    } else {
+                        AppRepository.updateDriver(d)
+                    }
+                }
                 showDialog = false
             }
         )
