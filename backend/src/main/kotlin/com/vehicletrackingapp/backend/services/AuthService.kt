@@ -43,14 +43,30 @@ class AuthService(
 
     suspend fun login(request: LoginRequest): AuthResponse? {
         if (request.identity == "admin" && request.password == "password") {
-            val accessToken = jwtConfig.generateAccessToken("admin_id")
+            var adminUser = userRepository.findByIdentity("admin")
+            if (adminUser == null) {
+                adminUser = User(
+                    id = "admin_id",
+                    name = "System Admin",
+                    email = "admin@system.com",
+                    phone = "admin",
+                    passwordHash = BCrypt.hashpw("password", BCrypt.gensalt()),
+                    licenseNumber = null,
+                    photoUri = null,
+                    createdAt = Clock.System.now().toLocalDateTime(TimeZone.UTC),
+                    updatedAt = Clock.System.now().toLocalDateTime(TimeZone.UTC)
+                )
+                userRepository.createUser(adminUser)
+            }
+
+            val accessToken = jwtConfig.generateAccessToken(adminUser.id)
             val refreshToken = jwtConfig.generateRefreshToken()
             val expiresAt = Clock.System.now().plus(30.days).toLocalDateTime(TimeZone.UTC)
-            tokenRepository.saveToken("admin_id", refreshToken, expiresAt)
+            tokenRepository.saveToken(adminUser.id, refreshToken, expiresAt)
             return AuthResponse(
                 accessToken = accessToken,
                 refreshToken = refreshToken,
-                user = UserDto("admin_id", "System Admin", "admin@system.com", "admin", null, null)
+                user = UserDto(adminUser.id, adminUser.name, adminUser.email, adminUser.phone, adminUser.licenseNumber, adminUser.photoUri)
             )
         }
 
