@@ -145,7 +145,17 @@ object AppRepository {
         val response = api.getAllUsers()
         if (response.isSuccessful) {
             response.body()?.data?.let { users ->
-                _drivers.value = users.map { Driver(it.id, it.name, it.phone, it.email ?: "", it.licenseNumber ?: "", "1234", it.photoUri) }
+                _drivers.value = users.map { 
+                    Driver(
+                        id = it.id,
+                        name = it.name,
+                        phone = it.phone,
+                        licenseNumber = it.licenseNumber ?: "",
+                        password = "1234",
+                        photoUri = it.photoUri,
+                        email = it.email ?: ""
+                    )
+                }
             }
         }
     }
