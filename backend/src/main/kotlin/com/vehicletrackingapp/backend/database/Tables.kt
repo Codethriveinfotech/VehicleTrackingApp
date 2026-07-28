@@ -5,6 +5,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.exposed.sql.ReferenceOption
 
 object Users : Table("users") {
     val id = text("id")
@@ -21,7 +22,7 @@ object Users : Table("users") {
 
 object RefreshTokens : Table("refresh_tokens") {
     val id = integer("id").autoIncrement()
-    val userId = text("user_id").references(Users.id)
+    val userId = text("user_id").references(Users.id, onDelete = ReferenceOption.CASCADE)
     val token = text("token").uniqueIndex()
     val expiresAt = datetime("expires_at")
     override val primaryKey = PrimaryKey(id)
@@ -32,7 +33,7 @@ object Vehicles : Table("vehicles") {
     val number = text("number").uniqueIndex()
     val model = text("model")
     val imageUri = text("image_uri").nullable()
-    val assignedUserId = text("assigned_user_id").references(Users.id).nullable()
+    val assignedUserId = text("assigned_user_id").references(Users.id, onDelete = ReferenceOption.SET_NULL).nullable()
     val type = text("type").default("Truck")
     val registrationNumber = text("registration_number").default("")
     val fuelType = text("fuel_type").default("Diesel")
@@ -44,8 +45,8 @@ object Vehicles : Table("vehicles") {
 
 object Trips : Table("trips") {
     val id = text("id")
-    val driverId = text("driver_id").references(Users.id)
-    val vehicleId = text("vehicle_id").references(Vehicles.id).nullable()
+    val driverId = text("driver_id").references(Users.id, onDelete = ReferenceOption.CASCADE)
+    val vehicleId = text("vehicle_id").references(Vehicles.id, onDelete = ReferenceOption.SET_NULL).nullable()
     
     // Start Trip
     val startDate = text("start_date").default("")
@@ -76,8 +77,8 @@ object Trips : Table("trips") {
 
 object Maintenance : Table("maintenance") {
     val id = text("id")
-    val vehicleId = text("vehicle_id").references(Vehicles.id)
-    val driverId = text("driver_id").references(Users.id)
+    val vehicleId = text("vehicle_id").references(Vehicles.id, onDelete = ReferenceOption.CASCADE)
+    val driverId = text("driver_id").references(Users.id, onDelete = ReferenceOption.CASCADE)
     val maintenanceType = text("maintenance_type").default("")
     val description = text("description")
     val date = text("date")

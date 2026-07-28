@@ -86,6 +86,12 @@ class UserRepositoryImpl : UserRepository {
     }
 
     override suspend fun deleteUser(id: String): Boolean = dbQuery {
+        com.vehicletrackingapp.backend.database.RefreshTokens.deleteWhere { com.vehicletrackingapp.backend.database.RefreshTokens.userId eq id }
+        com.vehicletrackingapp.backend.database.Vehicles.update({ com.vehicletrackingapp.backend.database.Vehicles.assignedUserId eq id }) {
+            it[assignedUserId] = null
+        }
+        com.vehicletrackingapp.backend.database.Trips.deleteWhere { com.vehicletrackingapp.backend.database.Trips.driverId eq id }
+        com.vehicletrackingapp.backend.database.Maintenance.deleteWhere { com.vehicletrackingapp.backend.database.Maintenance.driverId eq id }
         Users.deleteWhere { Users.id eq id } > 0
     }
 }

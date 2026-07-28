@@ -27,7 +27,7 @@ fun Route.userRoutes(userRepository: UserRepository) {
                 val existing = userRepository.findById(id) ?: return@put call.respond(ApiResponse.error("User not found"))
                 val updatedUser = existing.copy(
                     name = updateReq.name,
-                    email = updateReq.email,
+                    email = if (updateReq.email.isNullOrBlank()) null else updateReq.email,
                     phone = updateReq.phone,
                     licenseNumber = updateReq.licenseNumber,
                     photoUri = updateReq.photoUri
