@@ -178,7 +178,7 @@ fun AdminSummaryScreen() {
     val drivers by AppRepository.getAllDrivers().collectAsState(initial = emptyList())
     val maintenance by AppRepository.getAllMaintenance().collectAsState(initial = emptyList())
 
-    val activeVehicles = vehicles.count { it.status.equals("Active", ignoreCase = true) }.toString()
+    val activeVehicles = vehicles.size.toString()
     val onTrip = trips.count { it.endTime.isBlank() || it.status.equals("draft", ignoreCase = true) }.toString()
     val totalDrivers = drivers.size.toString()
     val maintenanceCount = maintenance.size.toString()

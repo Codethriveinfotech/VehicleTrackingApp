@@ -21,7 +21,7 @@ import androidx.compose.material.icons.filled.Route
 
 @Composable
 fun DriverHistoryScreen(driverId: String) {
-    val allSubmittedTrips by AppRepository.getSubmittedTrips().collectAsState(initial = emptyList())
+    val allSubmittedTrips by AppRepository.getAllTrips().collectAsState(initial = emptyList())
     val driverTrips = allSubmittedTrips.filter { it.driverId == driverId }
     val vehicles by AppRepository.getAllVehicles().collectAsState(initial = emptyList())
     

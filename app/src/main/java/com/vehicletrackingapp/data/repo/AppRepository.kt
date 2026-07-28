@@ -238,7 +238,7 @@ object AppRepository {
             Log.e("AppRepository", "upsertTrip sync failed", e)
         } 
     }
-    fun getSubmittedTrips(): Flow<List<TripEntry>> = _submittedTrips.asStateFlow()
+    fun getAllTrips(): Flow<List<TripEntry>> = _submittedTrips.asStateFlow()
 
     fun getDraftMaintenance(driverId: String): Flow<MaintenanceRecord?> = _draftMaintenance.asStateFlow()
     
@@ -260,7 +260,7 @@ object AppRepository {
             Log.e("AppRepository", "upsertMaintenance sync failed", e)
         } 
     }
-    fun getSubmittedMaintenance(): Flow<List<MaintenanceRecord>> = _submittedMaintenance.asStateFlow()
+    fun getAllMaintenance(): Flow<List<MaintenanceRecord>> = _submittedMaintenance.asStateFlow()
 
     var adminUsername: String = "admin"
     var adminPassword: String = "admin123"

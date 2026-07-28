@@ -30,7 +30,7 @@ import com.vehicletrackingapp.util.ExportUtils
 
 @Composable
 fun ReportsTab() {
-    val submittedTrips by AppRepository.getSubmittedTrips().collectAsState(initial = emptyList())
+    val submittedTrips by AppRepository.getAllTrips().collectAsState(initial = emptyList())
     val drivers by AppRepository.getAllDrivers().collectAsState(initial = emptyList())
     val vehicles by AppRepository.getAllVehicles().collectAsState(initial = emptyList())
     val context = LocalContext.current

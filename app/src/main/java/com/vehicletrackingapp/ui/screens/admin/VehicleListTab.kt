@@ -72,7 +72,7 @@ fun VehicleListTab() {
 @Composable
 private fun VehicleDetailView(vehicle: Vehicle, onBack: () -> Unit) {
     val drivers by AppRepository.getAllDrivers().collectAsState(initial = emptyList())
-    val maintenanceList by AppRepository.getSubmittedMaintenance().collectAsState(initial = emptyList())
+    val maintenanceList by AppRepository.getAllMaintenance().collectAsState(initial = emptyList())
     
     val driver = drivers.firstOrNull { it.id == vehicle.assignedDriverId }
     val maintenance = maintenanceList.filter { it.vehicleId == vehicle.id }
