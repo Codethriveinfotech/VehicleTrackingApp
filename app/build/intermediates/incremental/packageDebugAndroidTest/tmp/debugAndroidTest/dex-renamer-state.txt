@@ -1,0 +1,4 @@
+#Tue Jul 28 22:35:38 IST 2026
+base.0=G\:\\jiju projects\\VehicleTrackingApp-main\\app\\build\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\0\\classes.dex
+path.0=0/classes.dex
+renamed.0=classes.dex
