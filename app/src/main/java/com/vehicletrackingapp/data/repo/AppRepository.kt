@@ -93,6 +93,20 @@ object AppRepository {
         null
     }
 
+    suspend fun loginAdmin(username: String, password: String): Boolean = try {
+        val response = api.login(LoginRequest(username, password))
+        if (response.isSuccessful && response.body()?.success == true) {
+            val authData = response.body()?.data
+            if (authData != null) {
+                sessionManager?.saveAuthToken(authData.accessToken)
+                true
+            } else false
+        } else false
+    } catch (e: Exception) {
+        Log.e("AppRepository", "loginAdmin error", e)
+        false
+    }
+
     suspend fun signUp(driver: Driver) { 
         try { 
             val request = com.vehicletrackingapp.data.remote.RegisterRequest(
@@ -104,7 +118,10 @@ object AppRepository {
                 licenseNumber = driver.licenseNumber,
                 photoUri = driver.photoUri
             )
-            api.signUp(request)
+            val response = api.signUp(request)
+            if (!response.isSuccessful || response.body()?.success == false) {
+                Log.e("AppRepository", "SignUp failed: ${response.errorBody()?.string() ?: response.body()?.message}")
+            }
             fetchDrivers()
         } catch (e: Exception) {
             Log.e("AppRepository", "SignUp sync failed", e)

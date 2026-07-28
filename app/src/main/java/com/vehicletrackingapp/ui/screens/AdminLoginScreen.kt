@@ -120,7 +120,8 @@ fun AdminLoginScreen(onLoginSuccess: () -> Unit, onBack: () -> Unit) {
                             loading = true
                             scope.launch {
                                 delay(600) // Authenticating feel
-                                if (username == AppRepository.adminUsername && password == AppRepository.adminPassword) {
+                                val repository = AppRepository
+                                if (repository.loginAdmin(username, password)) {
                                     error = null
                                     onLoginSuccess()
                                 } else {

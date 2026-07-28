@@ -36,7 +36,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/Theme.VehicleTrackingApp" >
+        android:theme="@style/Theme.VehicleTrackingApp"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="com.vehicletrackingapp.MainActivity"
             android:exported="true"

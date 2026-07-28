@@ -11,10 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
     // Use this for local testing via Android Emulator
-    private const val BASE_URL = "http://10.0.2.2:8080/"
+    // private const val BASE_URL = "http://10.0.2.2:8080/"
     
     // Use this for the live production server (uncomment when deploying)
-    // private const val BASE_URL = "https://vehicletrackingapp-fdy2.onrender.com/"
+    private const val BASE_URL = "https://vehicletrackingapp-fdy2.onrender.com/"
 
     fun create(sessionManager: SessionManager): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {

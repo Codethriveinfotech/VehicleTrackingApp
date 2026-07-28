@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:2:1-42:12
-INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:2:1-42:12
-INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:2:1-42:12
-INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:2:1-42:12
+ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:2:1-43:12
 MERGED from [androidx.navigation:navigation-common:2.7.7] C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\b4ec7bd73cb17a1d82dba0d5307c8a5e\transformed\navigation-common-2.7.7\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-runtime:2.7.7] C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\f6e1d7736f13b0dcae667da5c04dc4da\transformed\navigation-runtime-2.7.7\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-common-ktx:2.7.7] C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\299b24afca1506271f8affd9cbb80db4\transformed\navigation-common-ktx-2.7.7\AndroidManifest.xml:2:1-7:12
@@ -105,8 +105,8 @@ ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest
 	android:name
 		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:9:19-57
 application
-ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:11:5-41:19
-INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:11:5-41:19
+ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:11:5-42:19
+INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:11:5-42:19
 MERGED from [androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\2eb75280bd33973d5d000268fea9a820\transformed\ui-tooling-release\AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.compose.ui:ui-tooling-android:1.7.0] C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\2eb75280bd33973d5d000268fea9a820\transformed\ui-tooling-release\AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.emoji2:emoji2:1.3.0] C:\Users\KIRUBAKARAN\.gradle\caches\8.9\transforms\60be9d7cbe0d515b386333d7ef273790\transformed\emoji2-1.3.0\AndroidManifest.xml:23:5-33:19
@@ -139,44 +139,46 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\KIRUBAKARAN\.gradl
 		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:13:9-35
 	android:theme
 		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:17:9-56
+	android:usesCleartextTraffic
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:19:9-44
 	android:name
 		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:12:9-43
 activity#com.vehicletrackingapp.MainActivity
-ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:20:9-29:20
+ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:21:9-30:20
 	android:screenOrientation
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:24:13-49
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:25:13-49
 	android:exported
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:22:13-36
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:23:13-36
 	android:theme
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:23:13-60
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:24:13-60
 	android:name
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:21:13-41
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:22:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:25:13-28:29
+ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:26:13-29:29
 action#android.intent.action.MAIN
-ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:26:17-69
+ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:27:17-69
 	android:name
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:26:25-66
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:27:25-66
 category#android.intent.category.LAUNCHER
-ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:27:17-77
+ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:28:17-77
 	android:name
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:27:27-74
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:28:27-74
 provider#androidx.core.content.FileProvider
-ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:31:9-39:20
+ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:32:9-40:20
 	android:grantUriPermissions
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:35:13-47
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:36:13-47
 	android:authorities
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:33:13-70
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:34:13-70
 	android:exported
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:34:13-37
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:35:13-37
 	android:name
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:32:13-62
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:33:13-62
 meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:36:13-38:54
+ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:37:13-39:54
 	android:resource
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:38:17-51
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:39:17-51
 	android:name
-		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:37:17-67
+		ADDED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml:38:17-67
 uses-sdk
 INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from G:\jiju projects\VehicleTrackingApp-main\app\src\main\AndroidManifest.xml
