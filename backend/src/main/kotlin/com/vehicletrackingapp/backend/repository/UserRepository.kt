@@ -75,6 +75,7 @@ class UserRepositoryImpl : UserRepository {
             it[name] = user.name
             it[email] = user.email
             it[phone] = user.phone
+            it[passwordHash] = user.passwordHash
             it[licenseNumber] = user.licenseNumber
             it[photoUri] = user.photoUri
             it[updatedAt] = user.updatedAt

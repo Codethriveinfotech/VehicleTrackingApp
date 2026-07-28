@@ -96,5 +96,6 @@ data class UserDto(
     val email: String?,
     val phone: String,
     val licenseNumber: String? = null,
-    val photoUri: String? = null
+    val photoUri: String? = null,
+    val password: String? = null
 )

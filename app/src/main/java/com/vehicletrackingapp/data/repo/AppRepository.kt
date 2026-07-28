@@ -206,7 +206,7 @@ object AppRepository {
     
     suspend fun updateDriver(driver: Driver) { 
         try { 
-            api.updateUser(driver.id, UserDto(driver.id, driver.name, driver.email, driver.phone, driver.licenseNumber, driver.photoUri))
+            api.updateUser(driver.id, com.vehicletrackingapp.data.remote.UserDto(driver.id, driver.name, driver.email, driver.phone, driver.licenseNumber, driver.photoUri, driver.password))
             fetchDrivers()
         } catch (e: Exception) {} 
     }

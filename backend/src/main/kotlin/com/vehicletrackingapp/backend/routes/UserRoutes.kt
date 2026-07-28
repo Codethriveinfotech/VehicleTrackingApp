@@ -9,6 +9,7 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.mindrot.jbcrypt.BCrypt
 
 fun Route.userRoutes(userRepository: UserRepository) {
     authenticate("auth-jwt") {
@@ -25,10 +26,17 @@ fun Route.userRoutes(userRepository: UserRepository) {
                 val updateReq = call.receive<UserDto>()
                 // Fetch existing to retain password and dates
                 val existing = userRepository.findById(id) ?: return@put call.respond(ApiResponse.error("User not found"))
+                val newHash = if (!updateReq.password.isNullOrBlank()) {
+                    BCrypt.hashpw(updateReq.password, BCrypt.gensalt())
+                } else {
+                    existing.passwordHash
+                }
+                
                 val updatedUser = existing.copy(
                     name = updateReq.name,
                     email = if (updateReq.email.isNullOrBlank()) null else updateReq.email,
                     phone = updateReq.phone,
+                    passwordHash = newHash,
                     licenseNumber = updateReq.licenseNumber,
                     photoUri = updateReq.photoUri
                 )
