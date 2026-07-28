@@ -113,8 +113,8 @@ fun ReportsTab() {
         }
 
         Spacer(modifier = Modifier.height(20.dp))
-        GradientButton(text = "EXPORT FLEET DATA (CSV)") {
-            ExportUtils.exportTripsToCsv(context, submittedTrips)
+        GradientButton(text = "EXPORT FLEET DATA (PDF)") {
+            ExportUtils.exportTripsToPdf(context, submittedTrips)
         }
     }
 }
