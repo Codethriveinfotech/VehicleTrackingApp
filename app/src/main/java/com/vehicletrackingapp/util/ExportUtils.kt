@@ -8,7 +8,7 @@ import java.io.File
 import java.io.FileWriter
 
 object ExportUtils {
-    fun exportTripsToPdf(context: Context, trips: List<TripEntry>) {
+    fun exportTripsToPdf(context: Context, trips: List<TripEntry>, drivers: List<com.vehicletrackingapp.data.model.Driver>, vehicles: List<com.vehicletrackingapp.data.model.Vehicle>) {
         try {
             val fileName = "fleet_report_${System.currentTimeMillis()}.pdf"
             val pdfDocument = android.graphics.pdf.PdfDocument()
@@ -32,8 +32,8 @@ object ExportUtils {
             // Draw Table Headers
             val startY = 120f
             var currentY = startY
-            val colX = floatArrayOf(40f, 180f, 320f, 460f, 560f, 660f)
-            val headers = arrayOf("Date", "Source", "Destination", "Start KM", "End KM", "Status")
+            val colX = floatArrayOf(40f, 150f, 260f, 350f, 460f, 570f, 670f)
+            val headers = arrayOf("Date", "Driver", "Car", "Source", "Dest", "End KM", "Status")
             
             for (i in headers.indices) {
                 canvas.drawText(headers[i], colX[i], currentY, paint)
@@ -59,15 +59,18 @@ object ExportUtils {
                 }
                 
                 val dateStr = "${trip.startDate} ${trip.startTime}"
-                val src = if (trip.sourceLocation.length > 15) trip.sourceLocation.take(15) + "..." else trip.sourceLocation
-                val dest = if (trip.destinationLocation.length > 15) trip.destinationLocation.take(15) + "..." else trip.destinationLocation
+                val driver = drivers.find { it.id == trip.driverId }?.name ?: "Unknown"
+                val car = vehicles.find { it.id == trip.vehicleId }?.number ?: "Unknown"
+                val src = if (trip.sourceLocation.length > 12) trip.sourceLocation.take(12) + "..." else trip.sourceLocation
+                val dest = if (trip.destinationLocation.length > 12) trip.destinationLocation.take(12) + "..." else trip.destinationLocation
                 
                 canvas.drawText(dateStr, colX[0], currentY, paint)
-                canvas.drawText(src, colX[1], currentY, paint)
-                canvas.drawText(dest, colX[2], currentY, paint)
-                canvas.drawText(trip.startOdometer, colX[3], currentY, paint)
-                canvas.drawText(trip.endOdometer, colX[4], currentY, paint)
-                canvas.drawText(trip.status.uppercase(), colX[5], currentY, paint)
+                canvas.drawText(if (driver.length > 12) driver.take(12) + "..." else driver, colX[1], currentY, paint)
+                canvas.drawText(if (car.length > 10) car.take(10) + "..." else car, colX[2], currentY, paint)
+                canvas.drawText(src, colX[3], currentY, paint)
+                canvas.drawText(dest, colX[4], currentY, paint)
+                canvas.drawText(trip.endOdometer, colX[5], currentY, paint)
+                canvas.drawText(trip.status.uppercase(), colX[6], currentY, paint)
                 
                 currentY += 25f
             }
